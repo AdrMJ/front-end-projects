@@ -11,7 +11,7 @@ Repository for Front-End projects in Angular, Vue or React.js
 
 ## Psycho_AMJ
 
-<h1 style="color:red">Work in progress</h1>
+<h1 color:red>Work in progress</h1>
 ### Description
   The front-end project was created in Angular, featuring the ability to change the appearance of the page. It includes animations of book covers and is connected to a Java-based backend. Created for PsychoAMJ
 
