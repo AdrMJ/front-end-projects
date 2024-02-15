@@ -1,0 +1,44 @@
+.line {
+    background-color: white;
+    position: fixed;
+    left: -10%;
+    width: 150%;
+    height: 150%;
+    animation: whiteSmoke 100s linear infinite;
+    filter: url(#wavy);
+    top: -150%;
+    transform: rotate(26deg);
+    box-shadow: -100px 30px 200px 400px white;
+}
+
+svg {
+    height: 0;
+    width: 0;
+}
+
+@keyframes whiteSmoke {
+    0% {
+        box-shadow: -100px 30px 200px 400px white;
+        top: -150%;
+    }
+
+    25% {
+        box-shadow: -50px 15px 200px 400px white;
+        top: -210%;
+    }
+
+    50% {
+        box-shadow: 0px 0px 200px 400px white;
+        top: -270%;
+    }
+
+    75% {
+        box-shadow: -50px 15px 200px 400px white;
+        top: -210%;
+    }
+
+    100% {
+        box-shadow: -100px 30px 200px 400px white;
+        top: -150%;
+    }
+}

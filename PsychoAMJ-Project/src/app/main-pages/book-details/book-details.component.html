@@ -1,0 +1,16 @@
+<div class="content">
+    @if (book?.isStillAvailable == 1) {
+    <app-left-panel id="leftPanel" (detailsCategory)="changeDetailsCategory($event)"></app-left-panel>
+    <app-cover [book]="book"></app-cover>
+    <app-right-panel id="rightPanel" [book]="book" [detailsCategory]="detailsCategory"></app-right-panel>
+    <div class="panel">
+        <div *ngIf="book" class="title">{{ book.title }}</div>
+    </div>
+
+    }
+    @else {
+
+    <app-cover style="opacity: 0.1;" [book]="book"></app-cover>
+    <div class="notAvailable">NIEDOSTĘPNE</div>
+    }
+</div>

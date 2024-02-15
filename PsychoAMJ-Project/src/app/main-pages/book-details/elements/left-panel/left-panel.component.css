@@ -1,0 +1,29 @@
+.panel{
+    position: relative;
+
+    height: 80vh;
+    width: 30vw;
+
+    border-radius: 16px 0 0 16px;
+
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(11.4px);
+
+    -webkit-backdrop-filter: blur(11.4px);
+}
+.nav{
+    padding: 6vh 0 7vh 0;
+
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 50px;
+    font-weight: 600;
+
+    color: white;
+    opacity: 0.2;
+}
+
+.nav:hover{
+    opacity: 1;
+}

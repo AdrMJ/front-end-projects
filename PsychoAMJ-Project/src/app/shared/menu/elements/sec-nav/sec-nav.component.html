@@ -1,0 +1,40 @@
+<div class="nav">
+    @switch(nav){
+    @case('categories'){
+    @for(category of categories; track categories.indexOf){
+    <div class="categoriesPanel">
+        <li class="categories"><a [routerLink]="['/category', category]" (click)="hideMenu();"
+                >{{ category }}</a></li>
+    </div>
+    }} @case('titles'){
+    @for(book of books; track book.id){
+    <div class="titlesPanel">
+        <li><a [routerLink]="['/id', book.id]" (click)="hideMenu()">{{ book.title
+                }}</a></li>
+    </div>
+
+    }}@case('themes'){
+    <div class="themesPanel">
+        <a (click)="hideMenu(); changeBodyBackground('black'); changeAnimation(3)" class="chooseTheme" id="fourth">
+            <div class="text">Biały dym na czarnym tle</div>
+            <img src="../../../../../assets/images/animations-objects/show-theme/white-smoke.png" />
+        </a>
+        <a (click)="hideMenu(); changeBodyBackground('white'); changeAnimation(2)" class="chooseTheme" id="third">
+            <div class="text">Czarny dym na białym tle</div>
+            <img src="../../../../../assets/images/animations-objects/show-theme/black-smoke.png" />
+        </a><br>
+        <a (click)="hideMenu(); changeBodyBackground('black'); changeAnimation(1)" class="chooseTheme" id="second">
+            <div class="text">Kolorowy dym na czarnym tle</div>
+            <img src="../../../../../assets/images/animations-objects/show-theme/colorful-smoke-black-background.png" />
+        </a>
+        <a (click)="hideMenu(); changeBodyBackground('white'); changeAnimation(1)" class="chooseTheme" id="first">
+            <div class="text">Kolorowy dym na białym tle</div>
+            <img src="../../../../../assets/images/animations-objects/show-theme/colorful-smoke-white-background.png" />
+        </a>
+    </div>
+    }@default {
+    <div class="defaultPanel">
+
+    </div>
+    }
+    }

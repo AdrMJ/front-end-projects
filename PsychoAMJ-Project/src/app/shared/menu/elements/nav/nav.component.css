@@ -1,0 +1,54 @@
+a {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+ul{
+    list-style: none;
+}
+
+ul li a {
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 3vw;
+
+    -webkit-text-stroke: 1px white;
+    color: rgb(126, 126, 126);
+    transition: 0.5s;
+    opacity: 0.2;
+}
+
+ul:hover li a {
+    opacity: 0.2;
+}
+
+ul li a:hover {
+    -webkit-text-stroke-width: 0;
+    color: white;
+    opacity: 1;
+}
+
+ul li a::before {
+    content: attr(data-text);
+
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: var(--y);
+    left: var(--x);
+
+    pointer-events: none;
+    transition: 0.25s;
+    opacity: 0;
+
+    -webkit-text-stroke: 1px white;
+    color: transparent;
+    font-size: 5vw;
+}
+
+ul li a:hover::before {
+    opacity: 1;
+}

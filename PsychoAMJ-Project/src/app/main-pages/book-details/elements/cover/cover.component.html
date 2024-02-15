@@ -1,0 +1,8 @@
+<div class="book" *ngIf="book">
+    <img id="bookfront" src="{{ book.imageUrl.frontUrl }}">
+    
+    <img *ngIf="book.imageUrl.sideUrl" id="bookside" src=" {{ book.imageUrl.sideUrl }}">
+    <div [style.background-color]="book.imageUrl.color" id="booksidecolor"></div>
+
+    <img id="bookback" src=" {{ book.imageUrl.backUrl }}">
+</div>

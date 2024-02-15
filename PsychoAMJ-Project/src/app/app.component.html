@@ -1,0 +1,12 @@
+<a class="elements" id="dots" routerLink="" (click)="showMenu()">...</a>
+
+<div id="main-page" class="elements">
+    <router-outlet></router-outlet>
+</div>
+
+<app-menu id="menu" (animation)="changeAnimation($event)" ></app-menu>
+<div class="animation elements" [ngSwitch]="animation">
+    <app-colorful-smoke-animation *ngSwitchCase="1"/>
+    <app-black-smoke-animation *ngSwitchCase="2"/>
+    <app-white-smoke-animation *ngSwitchCase="3"/>
+</div>

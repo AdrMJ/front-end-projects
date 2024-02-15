@@ -1,0 +1,86 @@
+a {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.categories {
+    margin-left: 8vw;
+}
+
+a {
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 4vh;
+
+    -webkit-text-stroke: 1px white;
+    color: rgb(126, 126, 126);
+    transition: 0.5s;
+    opacity: 0.2;
+}
+
+a:hover {
+    opacity: 1;
+}
+
+li {
+    list-style: none;
+}
+
+li a {
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 4vh;
+    margin-left: 8vw;
+
+    -webkit-text-stroke: 1px white;
+    color: rgb(126, 126, 126);
+    transition: 0.5s;
+    opacity: 0.2;
+}
+
+li:hover a {
+    opacity: 0.2;
+}
+
+li a:hover {
+    -webkit-text-stroke-width: 0;
+    color: white;
+    opacity: 1;
+}
+
+img {
+    height: 20vh;
+}
+
+.chooseTheme {
+    display: inline-block;
+
+    margin-left: 8vw;
+
+    transition: 0.5s;
+    opacity: 0.2;
+
+}
+
+.text {
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(126, 126, 126);
+    -webkit-text-stroke: 1px white;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 19px;
+}
+
+.chooseTheme:hover .text {
+    -webkit-text-stroke: 0px;
+    color: white;
+}
+
+.chooseTheme:hover {
+    opacity: 1;
+}

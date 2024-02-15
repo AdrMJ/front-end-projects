@@ -1,0 +1,9 @@
+<div class="close">
+    <a data-text="X" class="x" (click) = hideMenu()>X</a>
+</div>
+<app-logos></app-logos>
+<app-nav (nav)="changeNav($event)"></app-nav>
+<app-sec-nav (animation)="changeAnimation($event)" [nav]="nav"></app-sec-nav>
+<app-footer></app-footer>
+<app-clouds-and-stars id="clouds"></app-clouds-and-stars>
+

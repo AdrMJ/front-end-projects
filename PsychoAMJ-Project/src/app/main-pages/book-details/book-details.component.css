@@ -1,0 +1,46 @@
+.content{
+    display: flex;
+    justify-content: center;
+}
+app-cover{   
+    z-index: 10;
+}
+app-left-panel{
+    z-index: 1;
+}
+app-right-panel{
+    z-index: 1;
+}
+.panel{
+    position: absolute;
+    width: 40vw;
+    height: 10vh;
+    bottom: 0;
+
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(11.4px);
+
+    -webkit-backdrop-filter: blur(11.4px);
+}
+.title{
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 600;
+    padding-top: 3%;
+    font-size: 2vw;
+    
+    color: white;
+}
+.notAvailable{
+    position: absolute;
+    top: 67vh;
+
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 600;
+    padding-top: 3%;
+    font-size: 3vw;
+    
+    color: white;
+}

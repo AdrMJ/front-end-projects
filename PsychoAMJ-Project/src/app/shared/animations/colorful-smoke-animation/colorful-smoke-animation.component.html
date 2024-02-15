@@ -1,0 +1,10 @@
+<div class="line" id="blue"></div>
+<div class="line" id="green"></div>
+<svg>
+    <filter id="smokeSFilter">
+        <feTurbulence x="0" y="0" baseFrequency="0.05" type="fractalNoise" numOctaves="500" seed="0">
+            <animate attributeName="baseFrequency" dur="100s" values="0.015;0.01;0.015" repeatCount="indefinite" />
+        </feTurbulence>
+        <feDisplacementMap in="SourceGraphic" scale="250" />
+    </filter>
+</svg>

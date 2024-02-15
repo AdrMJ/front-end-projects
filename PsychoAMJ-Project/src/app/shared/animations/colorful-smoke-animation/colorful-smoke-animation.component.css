@@ -1,0 +1,81 @@
+body {
+    background-color: black;
+}
+
+.line {
+    position: fixed;
+    height: 160%;
+    width: 160%;
+    right: -30%;
+    top: -30%;
+
+    border-radius: 50% 0 0 80%;
+    filter: url(#smokeSFilter);
+    rotate: calc(180deg);
+    background: none;
+}
+
+svg {
+    height: 0;
+    width: 0;
+}
+
+#green {
+    animation: greenSmoke 50s linear infinite;
+
+    z-index: -2;
+}
+
+#blue {
+    animation: blueSmoke 50s linear infinite;
+
+    z-index: -3;
+}
+
+#content {
+    z-index: 4;
+}
+
+@keyframes blueSmoke {
+    0% {
+        box-shadow: inset 40vw 40vh 500px blue;
+    }
+
+    25% {
+        box-shadow: inset 20vw 20vh 500px blue;
+    }
+
+    50% {
+        box-shadow: inset 0vw 0vh 0px blue;
+    }
+
+    75% {
+        box-shadow: inset 20vw 20vh 500px blue;
+    }
+
+    100% {
+        box-shadow: inset 40vw 40vh 500px blue;
+    }
+}
+
+@keyframes greenSmoke {
+    0% {
+        box-shadow: inset 25vw 25vh 500px lightseagreen;
+    }
+
+    20% {
+        box-shadow: inset 10vw 10vh 500px lightseagreen;
+    }
+
+    50% {
+        box-shadow: inset 0vw 0vh 0px lightseagreen;
+    }
+
+    70% {
+        box-shadow: inset 10vw 10vh 500px lightseagreen;
+    }
+
+    100% {
+        box-shadow: inset 25vw 25vh 500px lightseagreen;
+    }
+}

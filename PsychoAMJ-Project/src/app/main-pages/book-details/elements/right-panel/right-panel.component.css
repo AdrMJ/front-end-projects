@@ -1,0 +1,67 @@
+.panel{
+    position: relative;
+
+    height: 80vh;
+    width: 30vw;
+    
+    border-radius: 0 16px 16px 0;
+
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(11.4px);
+
+    -webkit-backdrop-filter: blur(11.4px);
+}
+.content{
+    text-align: left;
+
+    color: white;
+}
+.introWords .content{
+
+    padding: 3vh 2vw 3vh 2vw;
+
+    font-weight: 500;
+    font-size: 15px;
+}
+.authors .content{
+
+    padding: 3vh 2vw 0vh 2vw;
+
+    font-weight: 500;
+    font-size: 20.5px;
+}
+.details .content{
+
+    padding: 3vh 2vw 0vh 2vw;
+
+    font-weight: 500;
+    font-size: 27.5px;
+}
+.publication .content{
+
+    padding: 3vh 2vw 0vh 2vw;
+
+    font-weight: 500;
+    font-size: 32.5px;
+}
+a{
+    display: block;
+
+    padding-top: 45vh;
+
+    width: 30vw;
+    height: 20vh;
+
+    color: white;
+    opacity: 0.2;
+
+    font-weight: 500;
+    font-size: 32.5px;
+    text-align: center;
+    text-decoration: none;
+}
+a:hover{
+    opacity: 1;
+}
+.notAvailable{}

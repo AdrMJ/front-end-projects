@@ -1,0 +1,9 @@
+<div class="line"></div>
+<svg>
+    <filter id="wavy">
+        <feTurbulence x="0" y="0" baseFrequency="0.05" type="fractalNoise" numOctaves="500" seed="0">
+            <animate attributeName="baseFrequency" dur="100s" values="0.015; 0.01; 0.015;" repeatCount="indefinite" />
+        </feTurbulence>
+        <feDisplacementMap in="SourceGraphic" scale="200" />
+    </filter>
+</svg>

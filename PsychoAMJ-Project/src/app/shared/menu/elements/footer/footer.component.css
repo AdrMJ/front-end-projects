@@ -1,0 +1,55 @@
+.footer {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    bottom: -10vh;
+    height: 10vh;
+    width: 100vw;
+}
+
+.text {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: 700;
+    font-size: 1.5vw;
+
+    -webkit-text-stroke: 0.02vw white;
+    color: rgb(126, 126, 126);
+
+    transition: 0.5s;
+    opacity: 0.2;
+}
+
+.text:hover {
+    -webkit-text-stroke-width: 0;
+    color: white;
+    opacity: 1;
+}
+.turnOnClouds{
+    position: absolute;
+
+    bottom: 0vh;
+    left: 6vw;
+
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: 700;
+    font-size: 1.5vw;
+
+    -webkit-text-stroke: 0.02vw white;
+    color: rgb(126, 126, 126);
+
+    transition: 0.5s;
+    opacity: 0.2;
+
+    z-index: 10;
+}
+
+.turnOnClouds:hover{
+    -webkit-text-stroke-width: 0;
+    color: white;
+    opacity: 1;
+}
+img{
+    height: 20vh;
+}

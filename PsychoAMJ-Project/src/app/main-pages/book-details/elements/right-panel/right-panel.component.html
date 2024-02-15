@@ -1,0 +1,34 @@
+<div class="panel" *ngIf="book">
+    <div id="content">
+        @switch (detailsCategory) {
+        @case('introWords'){
+        <div class="introWords" *ngFor="let introWord of book.introWords">
+            <div class="content">{{ introWord.introWords }}</div>
+            <div class="content">{{ introWord.authorOfWords }}</div>
+        </div>
+        } @case('authors'){
+        <div class="authors">
+            <div class="content">Pisarze: {{ book.authors.writers }}</div>
+            <div class="content">Twórca obrazu: {{ book.authors.imageMaker }}</div>
+            <div class="content">Projektant okładki: {{ book.authors.coverDeveloper }}</div>
+            <div class="content">Ilustrator: {{ book.authors.illustrator }}</div>
+        </div>
+        }@case('details'){
+        <div class="details">
+            <div class="content">Ilość stron: {{ book.details.pageCount }}</div>
+            <div class="content">Kategoria: {{ book.details.category }}</div>
+            <div class="content">O książce: {{ book.details.aboutBook }}</div>
+        </div>
+        }@case('publication'){
+        <div class="publication">
+            <div class="content">Wydawnictwo: {{ book.publication.publisher }}</div>
+            <div class="content">Język: {{ book.publication.language }}</div>
+            <div class="content">Data wydania: {{ book.publication.releaseDate }}</div>
+            <a href="{{ book.publication.publisherUrl }}">Przejdź do strony wydawnictwa</a>
+        </div>
+        }@default {
+        <div></div>
+        }
+        }
+    </div>
+</div>

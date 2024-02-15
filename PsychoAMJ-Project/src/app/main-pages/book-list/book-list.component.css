@@ -1,0 +1,95 @@
+.container {
+    display: inline-block;
+    position: relative;
+
+    max-height: 80vh;
+    max-width: 80vw;
+    flex-wrap: wrap;
+
+    z-index: 1;
+}
+
+.container .card {
+    position: relative;
+    height: 46.8vh;
+    width: 16.6vw;
+    margin: 30px;
+
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
+    background-position: center;
+    background-size: cover;
+
+    pointer-events: all;
+    overflow: hidden;
+}
+
+.background {
+    position: absolute;
+    min-width: 16.6vw;
+    min-height: 46.8vh;
+
+    opacity: 1;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 16.64vw 46.9vh;
+    background-origin: border-box;
+    filter: blur(8px);
+}
+
+.container .card .content {
+    align-items: center;
+    justify-content: center;
+
+    min-height: 46.8vh;
+    min-width: 16.6vw;
+
+    transform: translateY(100px);
+    transition: 0.5s;
+
+    opacity: 0;
+    z-index: 3;
+}
+
+.container .card:hover .content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.container .card .content h2 {
+    position: absolute;
+    top: -3vh;
+    left: 1vw;
+
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 8em;
+
+    pointer-events: none;
+}
+
+.container .card .content h3 {
+    font-size: 1.8em;
+    color: #fff;
+    z-index: 2;
+}
+
+.container .card .content p {
+    font-size: 1em;
+    color: #fff;
+    font-weight: 300;
+}
+
+.title{
+    text-align: center;
+    padding-top: 23vh;
+}
+
+.moreInfo {
+    position: absolute;
+
+    bottom: 2vh;
+    left: 3.8vw;
+
+    text-decoration: none;
+    font-weight: 600;
+    color: white;
+}

@@ -1,0 +1,46 @@
+.line {
+    position: fixed;
+    height: 150%;
+    width: 150%;
+    left: -40%;
+    top: 70%;
+
+    animation: blackSmoke 100s linear infinite;
+
+    box-shadow: -100px 30px 200px 400px black;
+    transform: rotate(-150deg);
+    background-color: black;
+    filter: url(#wavy);
+}
+
+svg {
+    height: 0;
+    width: 0;
+}
+
+@keyframes blackSmoke {
+    0% {
+        box-shadow: -100px 30px 200px 400px black;
+        top: 70%;
+    }
+
+    25% {
+        box-shadow: -50px 15px 200px 400px black;
+        top: 145%;
+    }
+
+    50% {
+        box-shadow: 0px 0px 200px 400px black;
+        top: 220%;
+    }
+
+    75% {
+        box-shadow: -50px 15px 200px 400px black;
+        top: 145%;
+    }
+
+    100% {
+        box-shadow: -100px 30px 200px 400px black;
+        top: 70%;
+    }
+}

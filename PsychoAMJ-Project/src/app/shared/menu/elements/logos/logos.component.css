@@ -1,0 +1,29 @@
+.content {
+    position: relative;
+
+    height: 40vh;
+    width: 70vw;
+    z-index: 5;
+}
+
+.logo{
+    height: 30vh;
+    width: 20vw;
+
+    transition: 0.5s;
+    opacity: 0.2;
+    z-index: 1;
+}
+
+#psychoamj_logo{
+    width: 50vw;
+    align-self: center;
+    padding-bottom: 10vh;
+}
+#aj4_logo{
+    height: 40vh;
+}
+
+.logo:hover{
+    opacity: 1;
+}
