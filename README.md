@@ -50,7 +50,7 @@ Frontend wrote in Angular for PsychoAMJ.
 ![image](https://github.com/AdrMJ/frontend-projects/assets/101901718/49cac20a-dc22-4fcf-a25f-1c2c98a75d18)
 
 # Future
-Add additional paths to the routing, implement animations, enhance TypeScript code, and establish connections between all project elements that are currently present but not yet utilized.
+I've begun implementing tests using Karma and Jasmine within the project. As I progress, I'll continue to update the repository with these tests and provide detailed descriptions of the testing methodology employed for each component.
 
 # Future
 This repository is a work in progress. More projects will be added in the future, and existing projects will be refined.
