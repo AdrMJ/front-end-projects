@@ -4,9 +4,9 @@ Frontend wrote in Angular for PsychoAMJ.
 
 - [Pages Without Animation](#pages-without-animation)
   - [Book List](#book-list)
+  - [Menu](#menu)
   - [Book Details when is not available](#book-details-when-is-not-available)
   - [Book Details when is available](#book-details-when-is-available)
-  - [Menu](#menu)
 - [Animations](#animations)
   - [For Book List/Book Details](#book-list/book-details)
   - [For Menu](#menu)
@@ -16,9 +16,16 @@ Frontend wrote in Angular for PsychoAMJ.
 
 ## Pages Without Animation
 
+### Book List
 ![image](https://github.com/AdrMJ/frontend-projects/assets/101901718/f42d41a9-8dd9-405e-9987-77a16a3b2e34)
+
+### Menu
 ![image](https://github.com/AdrMJ/frontend-projects/assets/101901718/59f00296-ad7b-4220-88e0-f91bdc916937)
+
+### Book Details when is not available
 ![image](https://github.com/AdrMJ/frontend-projects/assets/101901718/d2600169-34b7-4378-a41f-8e8e9bd30290)
+
+### Book Details when is available
 ![image](https://github.com/AdrMJ/frontend-projects/assets/101901718/c3ef05bb-1fc7-466d-a553-90ef2b946163)
 
 ## Animations
