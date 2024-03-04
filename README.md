@@ -71,7 +71,7 @@ Frontend wrote in Angular for PsychoAMJ.
   I verified that my HTML elements were rendered correctly (Ensure that the 'if' and 'switch' statements correctly display alternate elements when the value changes). I utilized Jasmine to create spies for my services. I conducted tests on the subscription functionality. 
 
 ## Future
-  I need to tidy up some code; it's currently disorganized and messy. Once I'm done, I'll proceed to publish the changes.
+  I have to organize and clean up some code as it's currently quite disorganized and messy. Once that's taken care of, I plan to move forward with publishing the changes.
 
 # Future
   This repository is a work in progress. More projects will be added in the future, and existing projects will be refined.
