@@ -11,6 +11,7 @@ Frontend wrote in Angular for PsychoAMJ.
   - [For Book List/Book Details](#book-list/book-details)
   - [For Menu](#menu)
 - [Testing](#testing)
+  - [The Way](#the-way)
   - [Future](#future)
 - [License](#license)
 
@@ -49,12 +50,18 @@ Frontend wrote in Angular for PsychoAMJ.
 ### Clouds And Stars Animation
 ![image](https://github.com/AdrMJ/frontend-projects/assets/101901718/49cac20a-dc22-4fcf-a25f-1c2c98a75d18)
 
-# Future
-I've begun implementing tests using Karma and Jasmine within the project. As I progress, I'll continue to update the repository with these tests and provide detailed descriptions of the testing methodology employed for each component.
+# Testing
+
+## The Way
+
+  I verified that my HTML elements were rendered correctly (Ensure that the 'if' and 'switch' statements correctly display alternate elements when the value changes). I utilized Jasmine to create spies for my services. I conducted tests on the subscription functionality. 
+
+## Future
+  I need to tidy up some code; it's currently disorganized and messy. Once I'm done, I'll proceed to publish the changes.
 
 # Future
-This repository is a work in progress. More projects will be added in the future, and existing projects will be refined.
+  This repository is a work in progress. More projects will be added in the future, and existing projects will be refined.
 
 # License
 
-This project is licensed under the [MIT License](https://opensource.org/license/mit/).
+  This project is licensed under the [MIT License](https://opensource.org/license/mit/).
