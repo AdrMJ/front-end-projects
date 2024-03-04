@@ -11,6 +11,10 @@ Frontend wrote in Angular for PsychoAMJ.
   - [For Book List/Book Details](#book-list/book-details)
   - [For Menu](#menu)
 - [Testing](#testing)
+  - [Tools](#tools)
+    - [Jasmine](#jasmine)
+    - [Karma](#karma)
+    - [Modules](#modules)
   - [The Way](#the-way)
   - [Future](#future)
 - [License](#license)
@@ -52,8 +56,18 @@ Frontend wrote in Angular for PsychoAMJ.
 
 # Testing
 
-## The Way
+## Tools
 
+### [Jasmine](https://jasmine.github.io/)
+  I utilized Jasmine to develop a spy and establish a testing framework. By employing Expectations, I was able to assess the functionality of my website. Through this process, I gained insights into various aspects such as subscription mechanisms, conditional statements like switch and if, and the necessary functionalities for displaying content on the web.
+  
+### [Karma](https://karma-runner.github.io/latest/index.html)
+  The test runner assisted me with configuring tests, incorporating essential functions such as fakeAsync and tick, ensuring their proper execution. Its capabilities streamlined the process, allowing me to confidently run tests with accuracy and efficiency.
+
+### Modules
+  I utilized the RouterTestingModule and HTTPClientTestingModule to effectively configure mock dependencies within my code. By employing RouterTestingModule, I was able to simulate routing behavior, ensuring seamless navigation within the application during testing. Additionally, with the HTTPClientTestingModule, I could mimic HTTP requests and responses, facilitating thorough testing of components reliant on external data sources. These testing modules played a crucial role in enhancing the robustness and reliability of my codebase by enabling comprehensive testing of various scenarios and edge cases.
+
+## The Way
   I verified that my HTML elements were rendered correctly (Ensure that the 'if' and 'switch' statements correctly display alternate elements when the value changes). I utilized Jasmine to create spies for my services. I conducted tests on the subscription functionality. 
 
 ## Future
