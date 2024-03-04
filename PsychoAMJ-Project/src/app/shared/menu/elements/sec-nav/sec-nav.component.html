@@ -9,8 +9,7 @@
     }} @case('titles'){
     @for(book of books; track book.id){
     <div class="titlesPanel">
-        <li><a [routerLink]="['/id', book.id]" (click)="hideMenu()">{{ book.title
-                }}</a></li>
+        <li><a [routerLink]="['/id', book.id]" (click)="hideMenu()">{{ book.title }}</a></li>
     </div>
 
     }}@case('themes'){

@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LogosComponent } from './logos.component';
 import { MethodsService } from '../../../../services/methods/methods.service';

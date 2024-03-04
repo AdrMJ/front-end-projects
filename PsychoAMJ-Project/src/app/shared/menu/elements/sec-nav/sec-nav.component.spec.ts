@@ -1,10 +1,10 @@
-import { ComponentFixture, TestBed, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { MethodsService } from '../../../../services/methods/methods.service';
 import { BookService } from '../../../../services/book/book.service';
 import { DebugElement } from '@angular/core';
 import { SecNavComponent } from './sec-nav.component';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { By } from '@angular/platform-browser';
 import { NavComponent } from '../nav/nav.component';
 import { Router } from '@angular/router';
@@ -12,19 +12,14 @@ import { Location } from '@angular/common';
 import { BookDetailsComponent } from '../../../../main-pages/book-details/book-details.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BookListComponent } from '../../../../main-pages/book-list/book-list.component';
-import { Book } from '../../../../modules/book/book';
-import { of } from 'rxjs/internal/observable/of';
-import { Subscription } from 'rxjs';
+import { of } from 'rxjs';
 
 describe('SecNavComponent', () => {
     let component: SecNavComponent;
     let fixture: ComponentFixture<SecNavComponent>;
-    let httpClient: HttpClient;
     let httpTestingController: HttpTestingController;
 
-    let methodsServiceSpy: MethodsService;
     let bookServiceSpy: BookService;
-    let navComponentSpy: NavComponent;
 
     let elementDe: DebugElement;
     let router: Router;
@@ -57,6 +52,7 @@ describe('SecNavComponent', () => {
             ],
             imports: [
                 HttpClientTestingModule,
+                HttpClientModule,
                 RouterTestingModule.withRoutes(routes),
             ],
             declarations: [SecNavComponent]
@@ -68,14 +64,10 @@ describe('SecNavComponent', () => {
         fixture = TestBed.createComponent(SecNavComponent);
         component = fixture.componentInstance;
 
-        httpClient = TestBed.inject(HttpClient);
         httpTestingController = TestBed.inject(HttpTestingController);
-
         bookServiceSpy = TestBed.inject(BookService) as BookService;
-        methodsServiceSpy = TestBed.inject(MethodsService) as MethodsService;
-        navComponentSpy = TestBed.inject(NavComponent) as NavComponent;
-
         elementDe = fixture.debugElement;
+
         component.categories = [
             "category",
             "testCategory"
@@ -170,6 +162,7 @@ describe('SecNavComponent', () => {
                 ],
             }
         ];
+        
     });
 
     afterEach(() =>
@@ -195,7 +188,7 @@ describe('SecNavComponent', () => {
     it('router should navigate', fakeAsync(() => {
         router.navigate(['category/testRouter']);
         tick();
-
+        
         expect(location.path()).withContext("should navigate").toBe('/category/testRouter');
 
     }));
@@ -235,6 +228,19 @@ describe('SecNavComponent', () => {
         }
     }));
 
+    //test subscription
+
+    it('should return expected book', fakeAsync(() => {
+        bookServiceSpy.getBooks = jasmine.createSpy().and.returnValue(of([]));
+        let subSpy = spyOn(bookServiceSpy.getBooks(), 'subscribe');
+
+        component.ngOnInit();
+        tick();
+        
+        expect(bookServiceSpy.getBooks).toHaveBeenCalledBefore(subSpy);
+        expect(subSpy).toHaveBeenCalled();
+    }));
+    
     it('should call hideMenu() on click', fakeAsync(() => {
         spyOn(component, "hideMenu");
         component.nav = "categories";
@@ -319,7 +325,7 @@ describe('SecNavComponent', () => {
         expect(component.changeAnimation).withContext('should changeAnimation called 4 times').toHaveBeenCalledTimes(4);
     }));
 
-    it('should @Output should have been called with 1 after use changeAnimation', () => {
+    it('@Output should have been called with 1 after use changeAnimation', () => {
         spyOn(component.animation, 'emit');
         component.nav = 'themes';
         fixture.detectChanges();
@@ -328,7 +334,7 @@ describe('SecNavComponent', () => {
         expect(component.animation.emit).withContext('should have been called with 1').toHaveBeenCalledWith(1);
     });
 
-    it('should @Output should have been called with 1 after click .chooseTheme', () => {
+    it('@Output should have been called with 1 after click .chooseTheme', () => {
         spyOn(component.animation, 'emit');
         component.nav = 'themes';
         fixture.detectChanges();
@@ -363,13 +369,4 @@ describe('SecNavComponent', () => {
         expect(elementDe.queryAll(By.css(".defaultPanel"))).withContext("should create .defaultPanel").toBeTruthy();
     });
 
-    it('should call getBooks and return list of books and set of categories', fakeAsync(() => {
-        let response: Book[] = [];
-
-        bookServiceSpy.getBooks = jasmine.createSpy().and.returnValue(response);
-
-        component.subscribeBooks();
-        tick();
-        expect(component.books).toEqual(response);
-    }));
 });

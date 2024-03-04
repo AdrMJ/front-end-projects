@@ -5,7 +5,7 @@
 </div>
 
 <app-menu id="menu" (animation)="changeAnimation($event)" ></app-menu>
-<div class="animation elements" [ngSwitch]="animation">
+<div class="animation" [ngSwitch]="animation">
     <app-colorful-smoke-animation *ngSwitchCase="1"/>
     <app-black-smoke-animation *ngSwitchCase="2"/>
     <app-white-smoke-animation *ngSwitchCase="3"/>

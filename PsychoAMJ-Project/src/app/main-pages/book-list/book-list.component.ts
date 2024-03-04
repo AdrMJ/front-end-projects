@@ -1,4 +1,4 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import VanillaTilt from 'vanilla-tilt';
 import { Book } from '../../modules/book/book';
@@ -20,23 +20,23 @@ export class BookListComponent {
     category: string = "";
 
     private subscription: Subscription = new Subscription;
+    route: ActivatedRoute = inject(ActivatedRoute);
 
 
     constructor(
         private bookService: BookService,
-        private el: ElementRef,
-        private route: ActivatedRoute
+        private el: ElementRef
     ) { }
 
     ngOnInit(): void {
         this.route.params.subscribe((params) => {
             this.category = params['category'];
         });
-        this.subscribeBooks(this.category);
+        this.subscribeBooks();
     }
 
-    subscribeBooks(category: string) {
-        if (!category) {
+    subscribeBooks() {
+        if (!this.category) {
             this.subscription = this.bookService.getBooks().subscribe({
                 next: (books) => {
                     this.books = books;
@@ -47,9 +47,9 @@ export class BookListComponent {
                 }
             })
         } else {
-            this.subscription = this.bookService.getBookByCategory(category).subscribe({
+            this.subscription = this.bookService.getBookByCategory(this.category).subscribe({
                 next: (books) => {
-                    this.books = books.filter(book => book.details.category.includes(category));
+                    this.books = books;
                     this.addVanillaTilt();
                 },
                 error: (error) => {

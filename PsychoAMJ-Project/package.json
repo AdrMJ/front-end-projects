@@ -23,6 +23,7 @@
     "@angular/ssr": "^17.0.10",
     "express": "^4.18.2",
     "karma-typescript": "^5.5.4",
+    "ng-mocks": "^14.12.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "vanilla-tilt": "^1.8.1",

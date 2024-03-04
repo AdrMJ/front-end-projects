@@ -23,7 +23,7 @@ export class SecNavComponent {
     constructor(
         private methodsService: MethodsService,
         private bookService: BookService,
-    ) { }
+    ) {  }
 
     ngOnInit(): void {
         this.subscribeBooks();
@@ -44,6 +44,7 @@ export class SecNavComponent {
             })
         }
     }
+    
 
     ngOnDestroy(): void {
         if (this.subscription) {
