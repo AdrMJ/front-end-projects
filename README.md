@@ -16,7 +16,6 @@ Frontend wrote in Angular for PsychoAMJ.
     - [Jasmine](#jasmine)
     - [Karma](#karma)
     - [Modules](#modules)
-  - [Future](#future)
 - [License](#license)
 
 # Pages Without Animation
@@ -69,12 +68,6 @@ Frontend wrote in Angular for PsychoAMJ.
     
   ### Modules
   I utilized the RouterTestingModule and HTTPClientTestingModule to effectively configure mock dependencies within my code. By employing RouterTestingModule, I was able to simulate routing behavior, ensuring seamless navigation within the application during testing. Additionally, with the HTTPClientTestingModule, I could mimic HTTP requests and responses, facilitating thorough testing of components reliant on external data sources. These testing modules played a crucial role in enhancing the robustness and reliability of my codebase by enabling comprehensive testing of various scenarios and edge cases.
-
-  ## Future
-  I have to organize and clean up some code as it's currently quite disorganized and messy. Once that's taken care of, I plan to move forward with publishing the changes.
-
-# Future
-  This repository is a work in progress. More projects will be added in the future, and existing projects will be refined.
 
 # License
 
