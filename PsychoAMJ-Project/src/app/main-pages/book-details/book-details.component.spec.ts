@@ -6,7 +6,6 @@ import { Location } from '@angular/common';
 import { LeftPanelComponent } from './elements/left-panel/left-panel.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientModule } from '@angular/common/http';
 import { CoverComponent } from './elements/cover/cover.component';
 import { RightPanelComponent } from './elements/right-panel/right-panel.component';
 import { By } from '@angular/platform-browser';
@@ -15,15 +14,12 @@ import { BookService } from '../../services/book/book.service';
 import { of } from 'rxjs/internal/observable/of';
 
 describe('BookDetailsComponent', () => {
-    let fixture: ComponentFixture<BookDetailsComponent>
-    let component: BookDetailsComponent;;
-
-    let elementDe: DebugElement;
-
-    let router: Router;
-    let location: Location;
-
-    let bookServiceSpy: BookService;
+    let fixture: ComponentFixture<BookDetailsComponent>,
+        component: BookDetailsComponent,
+        bookServiceSpy: BookService,
+        elementDe: DebugElement,
+        location: Location,
+        router: Router;
 
     beforeEach(() => {
         const routes = [
@@ -35,7 +31,6 @@ describe('BookDetailsComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 HttpClientTestingModule,
-                HttpClientModule,
                 RouterTestingModule.withRoutes(routes)
             ],
             declarations: [
@@ -46,15 +41,13 @@ describe('BookDetailsComponent', () => {
             ]
         }).compileComponents();
 
+
+        bookServiceSpy = TestBed.inject(BookService) as BookService;
         fixture = TestBed.createComponent(BookDetailsComponent);
         component = fixture.componentInstance;
-
-        router = TestBed.inject(Router);
         location = TestBed.inject(Location);
-        
-        bookServiceSpy = TestBed.inject(BookService) as BookService;
-
         elementDe = fixture.debugElement;
+        router = TestBed.inject(Router);
 
         component.book = {
             id: 1,
@@ -101,82 +94,103 @@ describe('BookDetailsComponent', () => {
             ],
         };
         fixture.detectChanges();
-    });
+    })
 
     it('should create', () => {
-        expect(component).toBeTruthy();
-        
+        expect(component).withContext("should create component").toBeTruthy();
+
         expect(elementDe.query(By.css('.content'))).withContext("should create div with class content").toBeTruthy();
-    });
+    })
 
-    //leftPanel @Output
-    it('should change value after click', () => {
-        elementDe.query(By.css('#leftPanel')).query(By.css('#authors')).nativeElement.click();
-        fixture.detectChanges();
+    describe("leftPanel @Output", () => {
 
-        expect(component.detailsCategory).withContext('should change value to "authors"').toEqual('authors');
-        
-        elementDe.query(By.css('#leftPanel')).query(By.css('#details')).nativeElement.click();
-        fixture.detectChanges();
+        it('should change value after click', () => {
+            elementDe.query(By.css('#leftPanel')).query(By.css('#authors')).nativeElement.click();
+            fixture.detectChanges();
 
-        expect(component.detailsCategory).withContext('should change value to "details"').toEqual('details');
-        
-        elementDe.query(By.css('#leftPanel')).query(By.css('#publication')).nativeElement.click();
-        fixture.detectChanges();
+            expect(component.detailsCategory).withContext('should change value to "authors"').toEqual('authors');
 
-        expect(component.detailsCategory).withContext('should change value to "publication"').toEqual('publication');
-        
-        elementDe.query(By.css('#leftPanel')).query(By.css('#introWords')).nativeElement.click();
-        fixture.detectChanges();
+            elementDe.query(By.css('#leftPanel')).query(By.css('#details')).nativeElement.click();
+            fixture.detectChanges();
 
-        expect(component.detailsCategory).withContext('should change value to "introWords"').toEqual('introWords');
-    });
+            expect(component.detailsCategory).withContext('should change value to "details"').toEqual('details');
 
-    //test router
-    it('router should navigate', fakeAsync(() => {
-        router.navigate(['id/1']);
-        tick();
+            elementDe.query(By.css('#leftPanel')).query(By.css('#publication')).nativeElement.click();
+            fixture.detectChanges();
 
-        expect(location.path()).withContext("should navigate").toBe('/id/1');
-    }));
+            expect(component.detailsCategory).withContext('should change value to "publication"').toEqual('publication');
 
-    it('should get bookId and subscribe book by id', fakeAsync(() => {
-        router.navigate(['id/1']);
-        const bookId = Number(component.route.snapshot.params['id']);
-        tick();
+            elementDe.query(By.css('#leftPanel')).query(By.css('#introWords')).nativeElement.click();
+            fixture.detectChanges();
 
-        bookServiceSpy.getBookById = jasmine.createSpy().and.returnValue(of());
-        let subSpy = spyOn(bookServiceSpy.getBookById(bookId), 'subscribe');
+            expect(component.detailsCategory).withContext('should change value to "introWords"').toEqual('introWords');
+        })
 
-        TestBed.createComponent(BookDetailsComponent);
-        tick();
-        
-        expect(bookServiceSpy.getBookById).toHaveBeenCalledBefore(subSpy);
-        expect(subSpy).toHaveBeenCalled();
-    }));
+    })
 
-    // isStillAvailable == 1
-    it('should create informations about still available book', () => {
-        if (component.book) {
-            component.book.isStillAvailable = 1;
-        }
-        fixture.detectChanges();
+    describe("router", () => {
 
-        expect(elementDe.query(By.css('app-left-panel'))).withContext('should create app-left-panel').toBeTruthy();
-        expect(elementDe.query(By.css('app-cover'))).withContext('should create app-cover').toBeTruthy();
-        expect(elementDe.query(By.css('app-right-panel'))).withContext('should create app-right-panel').toBeTruthy();
-        expect(elementDe.query(By.css('.panel'))).withContext('should create div with class panel').toBeTruthy();
-        expect(elementDe.query(By.css('.title'))).withContext('should create div with class title').toBeTruthy();
-    });
+        it('router should navigate', fakeAsync(() => {
+            router.navigate(['id/1']);
+            tick();
 
-    // isStillAvailable == 0
-    it('should create informations about not available book', () => {
-        if (component.book) {
-            component.book.isStillAvailable = 0;
-        }
-        fixture.detectChanges();
+            expect(location.path()).withContext("should navigate").toBe('/id/1');
+        }))
 
-        expect(elementDe.query(By.css('app-cover'))).withContext('should create app-cover').toBeTruthy();
-        expect(elementDe.query(By.css('.notAvailable'))).withContext('should create div with class notAvailable').toBeTruthy();
-    });
-});
+    })
+
+    describe('#getBookById', () => {
+
+        it('should get bookId and subscribe book by id', fakeAsync(() => {
+            router.navigate(['id/1']);
+            const bookId = Number(component.route.snapshot.params['id']);
+            tick();
+
+            bookServiceSpy.getBookById = jasmine.createSpy().and.returnValue(of());
+            let subSpy = spyOn(bookServiceSpy.getBookById(bookId), 'subscribe');
+
+            TestBed.createComponent(BookDetailsComponent);
+            tick();
+
+            expect(bookServiceSpy.getBookById).withContext("should have been called before subscribe method").toHaveBeenCalledBefore(subSpy);
+            expect(subSpy).withContext("should have been called").toHaveBeenCalled();
+        }))
+
+    })
+
+    describe('isStillAvailable', () => {
+
+        describe('isStillAvailable == 1', () => {
+
+            it('should create informations about still available book', () => {
+                if (component.book) {
+                    component.book.isStillAvailable = 1;
+                }
+                fixture.detectChanges();
+
+                expect(elementDe.query(By.css('app-left-panel'))).withContext('should create app-left-panel').toBeTruthy();
+                expect(elementDe.query(By.css('app-cover'))).withContext('should create app-cover').toBeTruthy();
+                expect(elementDe.query(By.css('app-right-panel'))).withContext('should create app-right-panel').toBeTruthy();
+                expect(elementDe.query(By.css('.panel'))).withContext('should create div with class panel').toBeTruthy();
+                expect(elementDe.query(By.css('.title'))).withContext('should create div with class title').toBeTruthy();
+            })
+
+        })
+
+        describe('isStillAvailable == 0', () => {
+
+            it('should create informations about not available book', () => {
+                if (component.book) {
+                    component.book.isStillAvailable = 0;
+                }
+                fixture.detectChanges();
+
+                expect(elementDe.query(By.css('app-cover'))).withContext('should create app-cover').toBeTruthy();
+                expect(elementDe.query(By.css('.notAvailable'))).withContext('should create div with class notAvailable').toBeTruthy();
+            })
+
+        })
+
+    })
+
+})

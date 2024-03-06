@@ -6,10 +6,10 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 describe('LogosComponent', () => {
-    let component: LogosComponent;
-    let fixture: ComponentFixture<LogosComponent>;
-    let methodsServiceSpy: jasmine.SpyObj<MethodsService>;
-    let elementDe: DebugElement;
+    let methodsServiceSpy: jasmine.SpyObj<MethodsService>,
+        fixture: ComponentFixture<LogosComponent>,
+        component: LogosComponent,
+        elementDe: DebugElement;
 
     beforeEach(() => {
         const spy = jasmine.createSpyObj('MethodsService', ['showOrHide']);
@@ -21,65 +21,80 @@ describe('LogosComponent', () => {
             declarations: [LogosComponent]
         }).compileComponents();
 
+        methodsServiceSpy = TestBed.inject(MethodsService) as jasmine.SpyObj<MethodsService>;
         fixture = TestBed.createComponent(LogosComponent);
         component = fixture.componentInstance;
-        methodsServiceSpy = TestBed.inject(MethodsService) as jasmine.SpyObj<MethodsService>;
         elementDe = fixture.debugElement;
-    });
+    })
 
     it('should create', () => {
-        expect(component).toBeTruthy();
-        expect(elementDe.query(By.css('#content'))).toBeTruthy();
-        expect(elementDe.query(By.css('#aj4_logo'))).toBeTruthy();
-        expect(elementDe.query(By.css('#psychoamj_logo'))).toBeTruthy();
+        expect(component).withContext('should create component').toBeTruthy();
 
-    });
+        expect(elementDe.query(By.css('#content'))).withContext('should create div with id content').toBeTruthy();
+        expect(elementDe.query(By.css('#aj4_logo'))).withContext('should create img with id aj4_logo').toBeTruthy();
+        expect(elementDe.query(By.css('#psychoamj_logo'))).withContext('should create img with id psychoamj_logo').toBeTruthy();
 
-    it('should call showOrHide() after showOrHideMenu()', () => {
+    })
 
-        component.showOrHideMenu();
-        expect(methodsServiceSpy.showOrHide).toHaveBeenCalled();
-    });
+    describe('#showOrHide', () => {
 
-    it('should call showOrHideMenu() after click psychoamj logo', () => {
-        spyOn(component, "showOrHideMenu");
+        it('should call showOrHide() after showOrHideMenu()', () => {
+            component.showOrHideMenu();
 
-        let psychoamjLogo = elementDe.nativeElement.querySelector("#psychoamj_logo");
-        psychoamjLogo.click();
+            expect(methodsServiceSpy.showOrHide).withContext('showOrHide method from methodsService should have been called').toHaveBeenCalled();
+        })
 
-        fixture.detectChanges();
+    })
 
-        expect(component.showOrHideMenu).toHaveBeenCalled();
-    });
+    describe('#showOrHideMenu', () => {
 
-    it('should call alert() after click aj4 logo', () => {
-        spyOn(component, "alert");
+        it('should have been called after click psychoamj logo', () => {
+            let psychoamjLogo = elementDe.nativeElement.querySelector("#psychoamj_logo");
+            spyOn(component, "showOrHideMenu");
 
-        let aj4Logo = elementDe.nativeElement.querySelector("#aj4_logo");
-        aj4Logo.click();
+            psychoamjLogo.click();
+            fixture.detectChanges();
 
-        fixture.detectChanges();
+            expect(component.showOrHideMenu).withContext('showOrHideMenu method should have been called').toHaveBeenCalled();
+        })
 
-        expect(component.alert).toHaveBeenCalled();
-    });
+    })
 
-    it('should imgs exist', () =>{
-        const imgPsychoamj = elementDe.nativeElement.querySelector('#psychoamj_logo');
-        const imgAj4 = elementDe.nativeElement.querySelector('#aj4_logo');
+    describe('#alert', () => {
 
-        expect(imgPsychoamj).toBeTruthy();
-        expect(imgAj4).toBeTruthy();
+        it('should have been called after click aj4 logo', () => {
+            let aj4Logo = elementDe.nativeElement.querySelector("#aj4_logo");
+            spyOn(component, "alert");
 
-        const rectanglePsychoamj = imgPsychoamj.getBoundingClientRect();
-        const rectangleAj4 = imgAj4.getBoundingClientRect();
-        
-        setTimeout(() => {
-            expect(rectanglePsychoamj.height).toBeGreaterThan(0);
-            expect(rectanglePsychoamj.width).toBeGreaterThan(0);
+            aj4Logo.click();
+            fixture.detectChanges();
 
-            expect(rectangleAj4.height).toBeGreaterThan(0);
-            expect(rectangleAj4.width).toBeGreaterThan(0);
-        }, 10000);
-        
-    });
-});
+            expect(component.alert).withContext('alert should have been called').toHaveBeenCalled();
+        })
+
+    })
+
+    describe('<img/>', () => {
+
+        it('should imgs exist', () => {
+            const imgPsychoamj = elementDe.nativeElement.querySelector('#psychoamj_logo'),
+                imgAj4 = elementDe.nativeElement.querySelector('#aj4_logo');
+
+            expect(imgPsychoamj).toBeTruthy();
+            expect(imgAj4).toBeTruthy();
+
+            const rectanglePsychoamj = imgPsychoamj.getBoundingClientRect(),
+                rectangleAj4 = imgAj4.getBoundingClientRect();
+
+            setTimeout(() => {
+                expect(rectanglePsychoamj.height).withContext('rectanglePsychoamj s height should have more than 0 height').toBeGreaterThan(0);
+                expect(rectanglePsychoamj.width).withContext('rectanglePsychoamj s height should have more than 0 width').toBeGreaterThan(0);
+
+                expect(rectangleAj4.height).withContext('rectangleAj4 s height should have more than 0 height').toBeGreaterThan(0);
+                expect(rectangleAj4.width).withContext('rectangleAj4 s height should have more than 0 width').toBeGreaterThan(0);
+            }, 10000);
+
+        })
+
+    })
+})

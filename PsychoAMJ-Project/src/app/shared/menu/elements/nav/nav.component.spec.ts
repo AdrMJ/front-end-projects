@@ -10,22 +10,20 @@ import { BookListComponent } from '../../../../main-pages/book-list/book-list.co
 import { Location } from '@angular/common';
 
 describe('NavComponent', () => {
-    let component: NavComponent;
-    let fixture: ComponentFixture<NavComponent>;
-
-    let methodsServiceSpy: jasmine.SpyObj<MethodsService>;
-
-    let elementDe: DebugElement;
-    let router: Router;
-    let location: Location;
+    let methodsServiceSpy: jasmine.SpyObj<MethodsService>,
+        fixture: ComponentFixture<NavComponent>,
+        component: NavComponent,
+        elementDe: DebugElement,
+        location: Location,
+        router: Router;
 
     beforeEach(() => {
-        const spy = jasmine.createSpyObj('MethodsService', ['showOrHide']);
-        const routes = [
-            {
-                path: 'all', component: BookListComponent
-            },
-        ];
+        const spy = jasmine.createSpyObj('MethodsService', ['showOrHide']),
+            routes = [
+                {
+                    path: 'all', component: BookListComponent
+                },
+            ];
         TestBed.configureTestingModule({
             imports: [RouterTestingModule.withRoutes(routes)],
             providers: [
@@ -36,109 +34,135 @@ describe('NavComponent', () => {
             declarations: [NavComponent]
         }).compileComponents();
 
-        router = TestBed.inject(Router);
-        location = TestBed.inject(Location);
-
+        methodsServiceSpy = TestBed.inject(MethodsService) as jasmine.SpyObj<MethodsService>;
         fixture = TestBed.createComponent(NavComponent);
         component = fixture.componentInstance;
-
-        methodsServiceSpy = TestBed.inject(MethodsService) as jasmine.SpyObj<MethodsService>;
+        location = TestBed.inject(Location);
         elementDe = fixture.debugElement;
-    });
+        router = TestBed.inject(Router);
 
-    it("fakeAsync works", fakeAsync(() => {
-        let promise = new Promise(resolve => {
-            setTimeout(resolve, 10);
-        });
-        let done = false;
-        promise.then(() => (done = true));
-        tick(50);
-        expect(done).toBeTruthy();
-    }));
+        fixture.detectChanges();
+    })
 
     it('should create', () => {
-        expect(component).toBeTruthy();
-        expect(elementDe.query(By.css('.nav'))).toBeTruthy();
-        expect(elementDe.query(By.css('ul'))).toBeTruthy();
-        expect(elementDe.queryAll(By.css('li')).length).toEqual(elementDe.queryAll(By.css('a')).length);
-    });
+        expect(component).withContext('should create component').toBeTruthy();
 
-    it('should @Output emit after use changeNav', () => {
-        spyOn(component.nav, 'emit');
-        component.changeNav('categories');
-        fixture.detectChanges();
+        expect(elementDe.query(By.css('.nav'))).withContext('should create div with class nav').toBeTruthy();
+        expect(elementDe.query(By.css('ul'))).withContext('should create ul').toBeTruthy();
+        expect(elementDe.queryAll(By.css('li')).length).withContext('should create li').toEqual(elementDe.queryAll(By.css('a')).length);
+    })
 
-        expect(component.nav.emit).toHaveBeenCalledWith('categories');
-    });
+    describe('#fakeAsync', () => {
 
-    it('should @Output emit after click #categories', () => {
-        spyOn(component.nav, 'emit');
-        const aCategories = elementDe.nativeElement.querySelector('#categories');
-        aCategories.click();
-        fixture.detectChanges();
+        it("fakeAsync works", fakeAsync(() => {
+            let promise = new Promise(resolve => {
+                setTimeout(resolve, 10);
+            }),
+                done = false;
+            promise.then(() => (done = true));
+            tick(50);
+            expect(done).withContext('should done be truthy').toBeTruthy();
+        }))
 
-        expect(component.nav.emit).toHaveBeenCalledWith('categories');
-    });
+    })
 
-    it('router should navigate to /all', fakeAsync(() => {
-        router.navigate(['all']);
-        tick();
-        expect(location.path()).toBe('/all');
-    }));
+    describe('@Output', () => {
 
-    it('routerLink should navigate to /all', fakeAsync(() => {
+        it('should emit after use changeNav', () => {
+            spyOn(component.nav, 'emit');
 
-        let aAll = elementDe.nativeElement.querySelector('#all');
-        aAll.click();
+            component.changeNav('categories');
+            fixture.detectChanges();
 
-        tick();
+            expect(component.nav.emit).withContext('should have been called with categories').toHaveBeenCalledWith('categories');
+        })
 
-        expect(location.path()).toBe('/all');
-    }));
+        it('should emit after click #categories', () => {
+            const aCategories = elementDe.nativeElement.querySelector('#categories');
+            spyOn(component.nav, 'emit');
 
-    it('should call changeNav() after click text category', () => {
-        spyOn(component, "changeNav");
+            aCategories.click();
+            fixture.detectChanges();
 
-        let textCategories = fixture.nativeElement.querySelector('#categories');
-        textCategories.click();
-        fixture.detectChanges();
+            expect(component.nav.emit).withContext('should have been called with categories').toHaveBeenCalledWith('categories');
+        })
 
-        expect(component.changeNav).toHaveBeenCalled();
-    });
+    })
 
-    it('should call changeNav() after click text titles', () => {
-        spyOn(component, "changeNav");
+    describe('Navigation', () => {
 
-        let textTitles = elementDe.nativeElement.querySelector('#titles');
-        textTitles.click();
-        fixture.detectChanges();
+        it('router should navigate to /all', fakeAsync(() => {
+            router.navigate(['all']);
+            tick();
+            expect(location.path()).toBe('/all');
+        }))
 
-        expect(component.changeNav).toHaveBeenCalled();
-    });
+        it('routerLink should navigate to /all', fakeAsync(() => {
+            let aAll = elementDe.nativeElement.querySelector('#all');
+            aAll.click();
 
-    it('should call changeNav() after click text themes', () => {
-        spyOn(component, "changeNav");
+            tick();
 
-        let textThemes = elementDe.nativeElement.querySelector('#themes');
-        textThemes.click();
-        fixture.detectChanges();
+            expect(location.path()).withContext('should navigate to /all').toBe('/all');
+        }))
 
-        expect(component.changeNav).toHaveBeenCalled();
-    });
+    })
 
-    it('should call showOrHide() after hideMenu()', () => {
-        component.hideMenu();
-        expect(methodsServiceSpy.showOrHide).toHaveBeenCalled();
-    });
+    describe('#changeNav', () => {
 
-    it('should call hideMenu() after click text "Wszystkie"', () => {
-        spyOn(component, "hideMenu");
+        it('should have been called after click text category', () => {
+            let textCategories = fixture.nativeElement.querySelector('#categories');
+            spyOn(component, "changeNav");
 
-        let text = elementDe.nativeElement.querySelector('a[routerLink]');
-        text.click();
+            textCategories.click();
+            fixture.detectChanges();
 
-        fixture.detectChanges();
+            expect(component.changeNav).withContext('should have been called').toHaveBeenCalled();
+        })
 
-        expect(component.hideMenu).toHaveBeenCalled();
-    });
-});
+        it('should have been called after click text titles', () => {
+            let textTitles = elementDe.nativeElement.querySelector('#titles');
+            spyOn(component, "changeNav");
+
+            textTitles.click();
+            fixture.detectChanges();
+
+            expect(component.changeNav).withContext('should have been called').toHaveBeenCalled();
+        })
+
+        it('should have been called after click text themes', () => {
+            let textThemes = elementDe.nativeElement.querySelector('#themes');
+            spyOn(component, "changeNav");
+
+            textThemes.click();
+            fixture.detectChanges();
+
+            expect(component.changeNav).withContext('should have been called').toHaveBeenCalled();
+        })
+
+    })
+
+    describe('#showOrHide', () => {
+
+        it('should have been called after hideMenu()', () => {
+            component.hideMenu();
+
+            expect(methodsServiceSpy.showOrHide).withContext('should have been called').toHaveBeenCalled();
+        })
+    })
+
+    describe('#hideMenu', () => {
+
+        it('should have been called after click text "Wszystkie"', () => {
+            let text = elementDe.nativeElement.querySelector('a[routerLink]');
+            spyOn(component, "hideMenu");
+
+            text.click();
+            fixture.detectChanges();
+
+            expect(component.hideMenu).withContext('should have been called').toHaveBeenCalled();
+        })
+
+    })
+
+})

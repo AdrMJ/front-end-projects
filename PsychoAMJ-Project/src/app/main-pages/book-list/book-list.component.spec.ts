@@ -13,16 +13,14 @@ import { BookDetailsComponent } from '../book-details/book-details.component';
 import { of } from 'rxjs';
 
 describe('BookListComponent', () => {
-    let component: BookListComponent;
-    let fixture: ComponentFixture<BookListComponent>;
 
-    let httpTestingController: HttpTestingController;
-
-    let elementDe: DebugElement;
-    let bookServiceSpy: BookService;
-
-    let router: Router;
-    let location: Location;
+    let httpTestingController: HttpTestingController,
+        fixture: ComponentFixture<BookListComponent>,
+        component: BookListComponent,
+        bookServiceSpy: BookService,
+        elementDe: DebugElement,
+        location: Location,
+        router: Router;
 
     const mockBooks = [
         {
@@ -113,22 +111,21 @@ describe('BookListComponent', () => {
                 }
             ],
         }
-    ];
-    const mockBooksByCategory = mockBooks.filter(book => book.details.category.includes('category'));
+    ],
+        mockBooksByCategory = mockBooks.filter(book => book.details.category.includes('category'));
 
-    beforeEach(async () => {
-        const bookServiceSpyObj = jasmine.createSpyObj('BookService', ['getBooks', 'getBookByCategory']);
-        const methodsServiceSpyObj = jasmine.createSpyObj('MethodsService', ['showOrHide', 'changeBodyBackground']);
-        const routes = [
-            {
-                path: 'category/:category', component: BookListComponent
-            },
-            {
-                path: 'id/:id', component: BookDetailsComponent
-            },
-        ]
+    beforeEach(() => {
+        const bookServiceSpyObj = jasmine.createSpyObj('BookService', ['getBooks', 'getBookByCategory']),
+            routes = [
+                {
+                    path: 'category/:category', component: BookListComponent
+                },
+                {
+                    path: 'id/:id', component: BookDetailsComponent
+                },
+            ]
 
-        await TestBed.configureTestingModule({
+        TestBed.configureTestingModule({
             providers: [
                 {
                     provide: BookService, useValue: bookServiceSpyObj
@@ -143,88 +140,93 @@ describe('BookListComponent', () => {
                 RouterTestingModule.withRoutes(routes),
             ],
         }).compileComponents();
+        httpTestingController = TestBed.inject(HttpTestingController);
+        bookServiceSpy = TestBed.inject(BookService) as BookService;
         fixture = TestBed.createComponent(BookListComponent);
         component = fixture.componentInstance;
-
-        router = TestBed.inject(Router);
         location = TestBed.inject(Location);
-        bookServiceSpy = TestBed.inject(BookService) as BookService; 
-        httpTestingController = TestBed.inject(HttpTestingController);
-
         elementDe = fixture.debugElement;
-    });
+        router = TestBed.inject(Router);
+    })
 
     afterEach(() =>
         httpTestingController.verify()
-    );
+    )
 
     it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+        expect(component).withContext("should create component").toBeTruthy();
+    })
 
     it("fakeAsync works", fakeAsync(() => {
         let promise = new Promise(resolve => {
             setTimeout(resolve, 10);
-        });
-        let done = false;
+        }),
+            done = false;
         promise.then(() => (done = true));
         tick(50);
-        expect(done).toBeTruthy();
-    }));
+        expect(done).withContext("should done works").toBeTruthy();
+    }))
 
-    //test router
-    it('router should navigate', fakeAsync(() => {
-        router.navigate(['category/testRouter']);
-        tick();
-        
-        expect(location.path()).withContext("should navigate").toBe('/category/testRouter');
+    describe('router', () => {
 
-    }));
+        it('router should navigate', fakeAsync(() => {
+            router.navigate(['category/testRouter']);
+            tick();
 
-    it('should subscribe books', fakeAsync(() => {
-        bookServiceSpy.getBooks = jasmine.createSpy().and.returnValue(of([mockBooks]));
-        let subSpy = spyOn(bookServiceSpy.getBooks(), 'subscribe');
+            expect(location.path()).withContext("should navigate").toBe('/category/testRouter');
+        }))
 
-        component.ngOnInit();
-        tick();
-        
-        expect(bookServiceSpy.getBooks).toHaveBeenCalledBefore(subSpy);
-        expect(subSpy).toHaveBeenCalled();
-    }));
+    })
 
+    describe('#getBooks', () => {
 
-    it('should create elements after subscribe books', () =>{        
-        bookServiceSpy.getBooks = jasmine.createSpy().and.returnValue(of([mockBooks]));
-        spyOn(bookServiceSpy.getBooks(), 'subscribe');
+        it('should subscribe books', fakeAsync(() => {
+            bookServiceSpy.getBooks = jasmine.createSpy().and.returnValue(of([mockBooks]));
+            let subSpy = spyOn(bookServiceSpy.getBooks(), 'subscribe');
 
-        component.ngOnInit();
-        fixture.detectChanges();
+            component.ngOnInit();
+            tick();
 
-        expect(elementDe.queryAll(By.css('.container')).length).withContext('should create div with class container').toEqual(component.books.length);
-        expect(elementDe.queryAll(By.css('.card')).length).withContext('should create div with class card').toEqual(component.books.length);
-        expect(elementDe.queryAll(By.css('.background')).length).withContext('should create div with class background').toEqual(component.books.length);
-        expect(elementDe.queryAll(By.css('.content')).length).withContext('should create div with class content').toEqual(component.books.length);
-        expect(elementDe.queryAll(By.css('.number')).length).withContext('should create h2 with class number').toEqual(component.books.length);
-        expect(elementDe.queryAll(By.css('.title')).length).withContext('should create h3 with class title').toEqual(component.books.length);
-        expect(elementDe.queryAll(By.css('.moreInfo')).length).withContext('should create div with class moreInfo').toEqual(component.books.length);
-    });
+            expect(bookServiceSpy.getBooks).toHaveBeenCalledBefore(subSpy);
+            expect(subSpy).toHaveBeenCalled();
+        }))
 
-    it('should create elements after subscribe books by category', () =>{
-        
-        bookServiceSpy.getBookByCategory = jasmine.createSpy().and.returnValue(of([mockBooksByCategory]));
-        spyOn(bookServiceSpy.getBookByCategory('category'), 'subscribe');
-        spyOn(component, 'subscribeBooks');
+        it('should create elements after subscribe books', () => {
+            bookServiceSpy.getBooks = jasmine.createSpy().and.returnValue(of([mockBooks]));
+            spyOn(bookServiceSpy.getBooks(), 'subscribe');
 
-        component.ngOnInit();
-        fixture.detectChanges();
+            component.ngOnInit();
+            fixture.detectChanges();
 
-        expect(elementDe.queryAll(By.css('.container')).length).withContext('should create div with class container').toEqual(component.books.length);
-        expect(elementDe.queryAll(By.css('.card')).length).withContext('should create div with class card').toEqual(component.books.length);
-        expect(elementDe.queryAll(By.css('.background')).length).withContext('should create div with class background').toEqual(component.books.length);
-        expect(elementDe.queryAll(By.css('.content')).length).withContext('should create div with class content').toEqual(component.books.length);
-        expect(elementDe.queryAll(By.css('.number')).length).withContext('should create h2 with class number').toEqual(component.books.length);
-        expect(elementDe.queryAll(By.css('.title')).length).withContext('should create h3 with class title').toEqual(component.books.length);
-        expect(elementDe.queryAll(By.css('.moreInfo')).length).withContext('should create div with class moreInfo').toEqual(component.books.length);
-    });
+            expect(elementDe.queryAll(By.css('.container')).length).withContext('should create div with class container').toEqual(component.books.length);
+            expect(elementDe.queryAll(By.css('.card')).length).withContext('should create div with class card').toEqual(component.books.length);
+            expect(elementDe.queryAll(By.css('.background')).length).withContext('should create div with class background').toEqual(component.books.length);
+            expect(elementDe.queryAll(By.css('.content')).length).withContext('should create div with class content').toEqual(component.books.length);
+            expect(elementDe.queryAll(By.css('.number')).length).withContext('should create h2 with class number').toEqual(component.books.length);
+            expect(elementDe.queryAll(By.css('.title')).length).withContext('should create h3 with class title').toEqual(component.books.length);
+            expect(elementDe.queryAll(By.css('.moreInfo')).length).withContext('should create div with class moreInfo').toEqual(component.books.length);
+        })
+    })
 
-});
+    describe('#getBooksByCategory', () => {
+
+        it('should create elements after subscribe books by category', () => {
+            bookServiceSpy.getBookByCategory = jasmine.createSpy().and.returnValue(of([mockBooksByCategory]));
+            spyOn(bookServiceSpy.getBookByCategory('category'), 'subscribe');
+            spyOn(component, 'subscribeBooks');
+
+            component.ngOnInit();
+            fixture.detectChanges();
+
+            expect(elementDe.queryAll(By.css('.container')).length).withContext('should create div with class container').toEqual(component.books.length);
+            expect(elementDe.queryAll(By.css('.card')).length).withContext('should create div with class card').toEqual(component.books.length);
+            expect(elementDe.queryAll(By.css('.background')).length).withContext('should create div with class background').toEqual(component.books.length);
+            expect(elementDe.queryAll(By.css('.content')).length).withContext('should create div with class content').toEqual(component.books.length);
+            expect(elementDe.queryAll(By.css('.number')).length).withContext('should create h2 with class number').toEqual(component.books.length);
+            expect(elementDe.queryAll(By.css('.title')).length).withContext('should create h3 with class title').toEqual(component.books.length);
+            expect(elementDe.queryAll(By.css('.moreInfo')).length).withContext('should create div with class moreInfo').toEqual(component.books.length);
+        })
+
+    })
+
+})

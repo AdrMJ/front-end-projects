@@ -6,21 +6,20 @@ import { By } from '@angular/platform-browser';
 import { Book } from '../../../../modules/book/book';
 
 describe('CoverComponent', () => {
-    let component: CoverComponent;
-    let fixture: ComponentFixture<CoverComponent>;
-    let elementDe: DebugElement;
-    let book: Book;
+    let fixture: ComponentFixture<CoverComponent>,
+        component: CoverComponent,
+        elementDe: DebugElement,
+        book: Book;
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
+    beforeEach(() => {
+        TestBed.configureTestingModule({
             declarations: [CoverComponent]
-        })
-            .compileComponents();
+        }).compileComponents();
 
         fixture = TestBed.createComponent(CoverComponent);
         component = fixture.componentInstance;
-        fixture.detectChanges();
         elementDe = fixture.debugElement;
+        fixture.detectChanges();
 
         book = {
             id: 1,
@@ -66,10 +65,10 @@ describe('CoverComponent', () => {
                 }
             ],
         };
-    });
+    })
 
     it('should create', () => {
-        expect(component).toBeTruthy();
+        expect(component).withContext("should create component").toBeTruthy();
 
         component.book = book;
         fixture.detectChanges();
@@ -79,28 +78,37 @@ describe('CoverComponent', () => {
         expect(elementDe.queryAll(By.css("img")).length).withContext("should create 3 img").toEqual(3);
 
         expect(elementDe.query(By.css("#booksidecolor"))).withContext("should create div with id book side color").toBeTruthy();
-    });
+    })
 
-    it('should input working', () => {
-        component.book = book;
-        fixture.detectChanges();
+    describe('@Input', () => {
 
-        expect(component.book).withContext("should change book's value").toEqual(book);
-    });
+        it('should @Input working', () => {
+            component.book = book;
+            fixture.detectChanges();
 
-    it('should image has correct src from @Input', () => {
-        component.book = book;
-        fixture.detectChanges();
+            expect(component.book).withContext("should change book's value").toEqual(book);
+        })
 
-        expect(elementDe.nativeElement.querySelector('#bookfront').src).withContext("should create image with src by book.imageUrl.frontUrl").toContain(book.imageUrl.frontUrl);
-        expect(elementDe.nativeElement.querySelector('#bookside').src).withContext("should create image with src by book.imageUrl.sideUrl").toContain(book.imageUrl.sideUrl);
-        expect(elementDe.nativeElement.querySelector('#bookback').src).withContext("should create image with src by book.imageUrl.backUrl").toContain(book.imageUrl.backUrl);
-    });
-    it('should div with class booksidecolor has correct background-color', () => {
-        component.book = book;
-        fixture.detectChanges();
-        
-        expect(getComputedStyle(elementDe.nativeElement.querySelector('#booksidecolor')).backgroundColor.toString()).toContain(book.imageUrl.color);
-    });
+        it('should image has correct src from @Input', () => {
+            component.book = book;
+            fixture.detectChanges();
 
-});
+            expect(elementDe.nativeElement.querySelector('#bookfront').src).withContext("should create image with src by book.imageUrl.frontUrl").toContain(book.imageUrl.frontUrl);
+            expect(elementDe.nativeElement.querySelector('#bookside').src).withContext("should create image with src by book.imageUrl.sideUrl").toContain(book.imageUrl.sideUrl);
+            expect(elementDe.nativeElement.querySelector('#bookback').src).withContext("should create image with src by book.imageUrl.backUrl").toContain(book.imageUrl.backUrl);
+        })
+
+    })
+
+    describe('book.image.color', () => {
+
+        it('should div with class booksidecolor has correct background-color', () => {
+            component.book = book;
+            fixture.detectChanges();
+
+            expect(getComputedStyle(elementDe.nativeElement.querySelector('#booksidecolor')).backgroundColor.toString()).withContext("should contain book.imageUrl.color value").toContain(book.imageUrl.color);
+        })
+
+    })
+
+})

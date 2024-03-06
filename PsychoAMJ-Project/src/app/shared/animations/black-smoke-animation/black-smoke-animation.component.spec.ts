@@ -6,18 +6,17 @@ describe('BlackSmokeAnimationComponent', () => {
   let component: BlackSmokeAnimationComponent;
   let fixture: ComponentFixture<BlackSmokeAnimationComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       declarations: [BlackSmokeAnimationComponent]
-    })
-    .compileComponents();
+    }).compileComponents();
     
     fixture = TestBed.createComponent(BlackSmokeAnimationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
+  })
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-});
+  })
+})

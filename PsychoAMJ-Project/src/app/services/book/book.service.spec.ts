@@ -13,8 +13,7 @@ describe('BookService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
-            providers: [BookService]
-        });
+        })
 
         httpTestingController = TestBed.inject(HttpTestingController);
         service = TestBed.inject(BookService);
@@ -111,15 +110,15 @@ describe('BookService', () => {
                 ]
             },
         ];
-    });
+    })
 
     afterEach(() => {
         httpTestingController.verify();
-    });
+    })
 
     it('should be created', () => {
-        expect(service).toBeTruthy();
-    });
+        expect(service).withContext('should create service').toBeTruthy();
+    })
 
     describe('#getBooks', () => {
 
@@ -128,14 +127,14 @@ describe('BookService', () => {
                 next: (books) =>
                     expect(books).withContext('should return expected books').toEqual(expectedBooks),
                 error: fail,
-            });
+            })
 
             const req = httpTestingController.expectOne(service.url + `all`);
             expect(req.request.method).toEqual('GET');
 
             req.flush(expectedBooks);
-        });
-    });
+        })
+    })
 
     describe('#getBookById', () => {
 
@@ -148,15 +147,15 @@ describe('BookService', () => {
                         expect(book).toContain(expectedBook);
                     },
                     error: fail,
-                });
+                })
 
                 const req = httpTestingController.expectOne(service.url + `id/${id}`);
                 expect(req.request.method).toEqual('GET');
 
                 req.flush(expectedBooks);
             }
-        });
-    });
+        })
+    })
 
     describe('#getBooksByCategory', () => {
 
@@ -180,5 +179,5 @@ describe('BookService', () => {
                 req.flush(expectedBooks);
             }
         })
-    });
-});
+    })
+})

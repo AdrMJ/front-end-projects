@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
 import { MethodsService } from './methods.service';
-import { delay } from 'rxjs';
 
 describe('MethodsService', () => {
     let service: MethodsService;
@@ -9,110 +8,132 @@ describe('MethodsService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({});
         service = TestBed.inject(MethodsService);
-    });
+    })
 
     it('should be created', () => {
         expect(service).toBeTruthy();
-    });
+    })
 
-    it('should change body background color', () => {
-        service.changeBodyBackground('white');
-        expect(document.body.style.backgroundColor).toBe('white');
-    });
 
-    it('should change visibility for clouds', () => {
+    describe('#changeBodyBackground', () => {
 
-        let clouds = document.createElement('div');
-        clouds.id = 'clouds';
-        document.body.appendChild(clouds);
+        it('should change body background color', () => {
+            service.changeBodyBackground('white');
+            expect(document.body.style.backgroundColor).toBe('white');
+        })
 
-        const cloudsSpy = spyOn(document, 'getElementById').and.returnValue(clouds);
+    })
 
-        const oldVisibility = 'visible';
-        clouds.style.visibility = oldVisibility;
+    describe('#showOrHideClouds', () => {
 
-        service.showOrHideClouds();
-        expect(cloudsSpy).toHaveBeenCalledWith('clouds');
-        expect(clouds.style.visibility).not.toBe(oldVisibility);
+        it('should change visibility for clouds', () => {
 
-        service.showOrHideClouds();
-        expect(cloudsSpy).toHaveBeenCalledWith('clouds');
-        expect(clouds.style.visibility).toBe(oldVisibility);
+            let clouds = document.createElement('div');
+            clouds.id = 'clouds';
+            document.body.appendChild(clouds);
 
-        document.body.removeChild(clouds);
-    });
+            const cloudsSpy = spyOn(document, 'getElementById').and.returnValue(clouds),
+                oldVisibility = 'visible';
 
-    it('should call showOrHideMenu() and showOrHideElements()', () => {
+            clouds.style.visibility = oldVisibility;
+            service.showOrHideClouds();
 
-        spyOn(service, 'showOrHideMenu');
-        spyOn(service, 'showOrHideElements');
+            expect(cloudsSpy).toHaveBeenCalledWith('clouds');
+            expect(clouds.style.visibility).not.toBe(oldVisibility);
 
-        service.showOrHide();
+            service.showOrHideClouds();
 
-        expect(service.showOrHideMenu).toHaveBeenCalled();
-        expect(service.showOrHideElements).toHaveBeenCalled();
+            expect(cloudsSpy).toHaveBeenCalledWith('clouds');
+            expect(clouds.style.visibility).toBe(oldVisibility);
 
-    });
+            document.body.removeChild(clouds);
+        })
 
-    it('should change visibility and transform for menu', () => {
-        let menu = document.createElement('div');
-        menu.id = 'menu';
-        document.body.appendChild(menu);
+    })
 
-        const menuSpy = spyOn(document, 'getElementById').and.returnValue(menu);
+    describe('#showOrHide', () => {
 
-        const oldVisibility = 'hidden';
-        const oldTransform = 'translateX(-100vw)';
 
-        menu.style.visibility = oldVisibility;
-        menu.style.transform = oldTransform;
+        it('should call showOrHideMenu() and showOrHideElements()', () => {
+            spyOn(service, 'showOrHideMenu');
+            spyOn(service, 'showOrHideElements');
 
-        service.showOrHide();
-        expect(menuSpy).toHaveBeenCalledWith('menu');
-        expect(menu.style.visibility).not.toBe(oldVisibility);
-        expect(menu.style.transform).not.toBe(oldTransform);
+            service.showOrHide();
 
-        service.showOrHide();
-        expect(menuSpy).toHaveBeenCalledWith('menu');
-        expect(menu.style.visibility).toBe(oldVisibility);
-        expect(menu.style.transform).toBe(oldTransform);
+            expect(service.showOrHideMenu).toHaveBeenCalled();
+            expect(service.showOrHideElements).toHaveBeenCalled();
+        })
 
-        document.body.removeChild(menu);
-    });
+        describe('#showOrHideMenu', () => {
 
-    it('should change visibility and transition for elements', () => {
-        let element1 = document.createElement('div');
-        element1.className = 'elements';
-        document.body.appendChild(element1);
+            it('should change visibility and transform for menu', () => {
+                let menu = document.createElement('div');
+                menu.id = 'menu';
+                document.body.appendChild(menu);
 
-        let element2 = document.createElement('div');
-        element2.className = 'elements';
-        document.body.appendChild(element2);
+                const menuSpy = spyOn(document, 'getElementById').and.returnValue(menu),
+                    oldVisibility = 'hidden',
+                    oldTransform = 'translateX(-100vw)';
 
-        let dots = document.createElement('div');
-        dots.id = 'dots';
-        dots.className = "elements";
-        document.body.appendChild(dots);
+                menu.style.visibility = oldVisibility;
+                menu.style.transform = oldTransform;
 
-        let elements: HTMLElement[] = [element1, element2, dots];
+                service.showOrHide();
+                expect(menuSpy).toHaveBeenCalledWith('menu');
+                expect(menu.style.visibility).not.toBe(oldVisibility);
+                expect(menu.style.transform).not.toBe(oldTransform);
 
-        const oldVisibility = 'visible';
-        const oldTransition = '0s';
+                service.showOrHide();
+                expect(menuSpy).toHaveBeenCalledWith('menu');
+                expect(menu.style.visibility).toBe(oldVisibility);
+                expect(menu.style.transform).toBe(oldTransform);
 
-        for (let element of elements) {
-            element.style.visibility = oldVisibility;
-            element.style.transitionDelay = oldTransition;
-        }
+                document.body.removeChild(menu);
+            })
 
-        service.showOrHide();
-        for (let element of elements) {
-            expect(element.style.visibility).not.toBe(oldVisibility);
-            expect(element.style.transitionDelay).toBe(oldTransition);
-        }
-        service.showOrHide();
-        for (let element of elements) {
-            expect(element.style.visibility).toBe(oldVisibility);
-            expect(element.style.transitionDelay).toBe(oldTransition);
-        }
-    });
-});
+        })
+
+        describe('#showOrHideElements', () => {
+
+            it('should change visibility and transition for elements', () => {
+                let element1 = document.createElement('div'),
+                    element2 = document.createElement('div'),
+                    dots = document.createElement('div'),
+                    elements: HTMLElement[] = [element1, element2, dots];
+
+                element1.className = 'elements';
+                document.body.appendChild(element1);
+
+                element2.className = 'elements';
+                document.body.appendChild(element2);
+
+                dots.id = 'dots';
+                dots.className = "elements";
+                document.body.appendChild(dots);
+
+                const oldVisibility = 'visible',
+                    oldTransition = '0s';
+
+                for (let element of elements) {
+                    element.style.visibility = oldVisibility;
+                    element.style.transitionDelay = oldTransition;
+                }
+
+                service.showOrHide();
+                for (let element of elements) {
+                    expect(element.style.visibility).not.toBe(oldVisibility);
+                    expect(element.style.transitionDelay).toBe(oldTransition);
+                }
+                service.showOrHide();
+                for (let element of elements) {
+                    expect(element.style.visibility).toBe(oldVisibility);
+                    expect(element.style.transitionDelay).toBe(oldTransition);
+                }
+
+            })
+
+        })
+
+    })
+
+})

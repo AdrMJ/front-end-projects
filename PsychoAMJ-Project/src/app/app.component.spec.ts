@@ -9,12 +9,6 @@ import { LogosComponent } from './shared/menu/elements/logos/logos.component';
 import { NavComponent } from './shared/menu/elements/nav/nav.component';
 import { SecNavComponent } from './shared/menu/elements/sec-nav/sec-nav.component';
 import { CloudsAndStarsComponent } from './shared/animations/clouds-and-stars/clouds-and-stars.component';
-import { BookListComponent } from './main-pages/book-list/book-list.component';
-import { BookDetailsComponent } from './main-pages/book-details/book-details.component';
-import { CoverComponent } from './main-pages/book-details/elements/cover/cover.component';
-import { LeftPanelComponent } from './main-pages/book-details/elements/left-panel/left-panel.component';
-import { RightPanelComponent } from './main-pages/book-details/elements/right-panel/right-panel.component';
-import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FooterComponent } from './shared/menu/elements/footer/footer.component';
 import { DebugElement } from '@angular/core';
@@ -22,21 +16,16 @@ import { By } from '@angular/platform-browser';
 import { MethodsService } from './services/methods/methods.service';
 
 describe('AppComponent', () => {
-    let component: AppComponent;
-    let fixture: ComponentFixture<AppComponent>;
+    let component: AppComponent,
+        fixture: ComponentFixture<AppComponent>,
+        mockMethodsService: MethodsService,
+        elementDe: DebugElement;
 
-    let mockMethodsService: MethodsService;
-
-    let elementDe: DebugElement;
-
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
+    beforeEach(() => {
+        TestBed.configureTestingModule({
             imports: [
                 HttpClientTestingModule,
-                HttpClientModule,
                 RouterTestingModule,
-
-                BookListComponent,
             ],
             declarations: [
                 AppComponent,
@@ -44,7 +33,6 @@ describe('AppComponent', () => {
                 ColorfulSmokeAnimationComponent,
                 BlackSmokeAnimationComponent,
                 WhiteSmokeAnimationComponent,
-
                 CloudsAndStarsComponent,
 
                 MenuComponent,
@@ -52,11 +40,6 @@ describe('AppComponent', () => {
                 NavComponent,
                 SecNavComponent,
                 FooterComponent,
-
-                BookDetailsComponent,
-                CoverComponent,
-                LeftPanelComponent,
-                RightPanelComponent
             ],
         }).compileComponents();
 
@@ -65,13 +48,13 @@ describe('AppComponent', () => {
 
         component = fixture.componentInstance;
         elementDe = fixture.debugElement;
-    });
+    })
 
     it('should create the app', () => {
-        const fixture = TestBed.createComponent(AppComponent);
-        const app = fixture.componentInstance;
-        expect(app).toBeTruthy();
-    });
+        const fixture = TestBed.createComponent(AppComponent),
+            app = fixture.componentInstance;
+        expect(app).withContext('should create app component').toBeTruthy();
+    })
 
     describe('HTML elements', () => {
 
@@ -84,31 +67,47 @@ describe('AppComponent', () => {
             expect(elementDe.queryAll(By.css('app-colorful-smoke-animation'))).withContext('should create app-colorful-smoke-animation').toBeTruthy();
             expect(elementDe.queryAll(By.css('app-black-smoke-animation'))).withContext('should create app-black-smoke-animation').toBeTruthy();
             expect(elementDe.queryAll(By.css('app-white-smoke-animation'))).withContext('should create app-white-smoke-animation').toBeTruthy();
-        });
+        })
 
-    });
+    })
 
-    describe('changeAnimation', () => {
+    describe('#changeAnimation', () => {
 
-        it('should change animation value', () =>{
+        it('should change animation value', () => {
             component.changeAnimation(1);
             fixture.detectChanges();
 
             expect(component.animation).withContext('should change animation').toEqual(1);
-        });
+        })
 
-        it('should crea')
+        it('should create component with animation', () => {
+            component.changeAnimation(1);
+            fixture.detectChanges();
 
-    });
+            expect(elementDe.query(By.css('app-colorful-smoke-animation'))).withContext('should create ColorfulSmokeAnimationComponent').toBeTruthy();
 
-    describe('showMenu', () =>{
+            component.changeAnimation(2);
+            fixture.detectChanges();
+
+            expect(elementDe.query(By.css('app-black-smoke-animation'))).withContext('should create BlackSmokeAnimationComponent').toBeTruthy();
+
+            component.changeAnimation(3);
+            fixture.detectChanges();
+
+            expect(elementDe.query(By.css('app-white-smoke-animation'))).withContext('should create WhiteSmokeAnimationComponent').toBeTruthy();
+        })
+
+    })
+
+    describe('#showMenu', () => {
 
         it('should show or hide menu', () => {
             spyOn(mockMethodsService, 'showOrHide');
             component.showMenu();
-            
-            expect(mockMethodsService.showOrHide).withContext('should call showOrHide method').toHaveBeenCalled();
-        });
 
-    });
-});
+            expect(mockMethodsService.showOrHide).withContext('should call showOrHide method').toHaveBeenCalled();
+        })
+
+    })
+
+})
